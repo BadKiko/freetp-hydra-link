@@ -2,12 +2,84 @@
     "name": "FreeTP Games",
     "downloads": [
         {
+            "title": "ECO HOLE",
+            "uris": [
+                "magnet:?xt=urn:btih:87c0d90ae1576aaddb6218bc7533143eb397b8a3"
+            ],
+            "uploadDate": "12-01-2025, 09:10",
+            "fileSize": "399.88 MB"
+        },
+        {
+            "title": "Subterranauts",
+            "uris": [
+                "magnet:?xt=urn:btih:a8aa05981ca887c3060158316db1087ff3c69709"
+            ],
+            "uploadDate": "12-01-2025, 07:42",
+            "fileSize": "761.61 MB"
+        },
+        {
+            "title": "Atomic Picnic",
+            "uris": [
+                "magnet:?xt=urn:btih:2a3e82041adb15577c4fd2914506759ae1c2b6e5"
+            ],
+            "uploadDate": "12-01-2025, 07:27",
+            "fileSize": "2.08 GB"
+        },
+        {
+            "title": "Tony and Jennie 2",
+            "uris": [
+                "magnet:?xt=urn:btih:15e145ca5f5f4c20586dc01bdfe95b61c2165130"
+            ],
+            "uploadDate": "11-01-2025, 07:27",
+            "fileSize": "3.56 GB"
+        },
+        {
+            "title": "Forest Of Fear",
+            "uris": [
+                "magnet:?xt=urn:btih:f5152b6b895ac1d480a5945ee86fc6f1c449d510"
+            ],
+            "uploadDate": "11-01-2025, 12:34",
+            "fileSize": "3.85 GB"
+        },
+        {
+            "title": "КЛЕТЬ",
+            "uris": [
+                "magnet:?xt=urn:btih:02f40f91b91e9200096ec5d573fd8f6ab634dc3e"
+            ],
+            "uploadDate": "10-01-2025, 15:39",
+            "fileSize": "851.21 MB"
+        },
+        {
+            "title": "Kebab Chefs! - Restaurant Simulator",
+            "uris": [
+                "magnet:?xt=urn:btih:b4ffc44fc948a0710c90773d88f2303aa10605d4"
+            ],
+            "uploadDate": "10-01-2025, 14:40",
+            "fileSize": "1.64 GB"
+        },
+        {
+            "title": "Din's Champion играть по сети и интернету ЛАН",
+            "uris": [
+                "magnet:?xt=urn:btih:fa54155ba07849f450ae6b160a2f8a2a0d5e47e8"
+            ],
+            "uploadDate": "10-01-2025, 14:14",
+            "fileSize": "649.08 MB"
+        },
+        {
             "title": "Warden's Will",
             "uris": [
                 "magnet:?xt=urn:btih:d48f24fed7e5273d19015218d7e2133f5d742dd0"
             ],
-            "uploadDate": "Неизвестно",
-            "fileSize": "Неизвестно"
+            "uploadDate": "09-01-2025, 18:42",
+            "fileSize": "1.21 GB"
+        },
+        {
+            "title": "Only Up: LIZARDS MUST FALL",
+            "uris": [
+                "magnet:?xt=urn:btih:11c5fe9a26f51523c2d8ecaf8ce400b03870884f"
+            ],
+            "uploadDate": "09-01-2025, 16:33",
+            "fileSize": "5.71 GB"
         }
     ]
 }
