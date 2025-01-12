@@ -4,23 +4,43 @@ import json
 import logging
 from datetime import datetime
 import re
+import sys
+import os
+from tqdm import tqdm
+from concurrent.futures import ThreadPoolExecutor, TimeoutError
+import bencodepy
+
+# Добавляем путь к локальной библиотеке torrentool
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'torrentool'))
+
 from torrentool.api import Torrent
-from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Настройка логирования
-logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
+logging.basicConfig(level=logging.CRITICAL, format='[%(levelname)s] %(message)s')
 
-def fetch_games(url):
-    response = requests.get(url)
-    if response.status_code != 200:
-        logging.error(f"[PAGE] Ошибка при получении данных с сайта: {response.status_code}")
+def fetch_games(url, retries=3, timeout=10):
+    for attempt in range(retries):
+        try:
+            response = requests.get(url, timeout=timeout)
+            if response.status_code == 200:
+                break
+            else:
+                logging.error(f"[PAGE] Ошибка при получении данных с сайта: {response.status_code}")
+        except requests.exceptions.RequestException as e:
+            logging.error(f"[PAGE] Ошибка запроса: {e}")
+        
+        if attempt < retries - 1:
+            logging.info(f"[PAGE] Повторная попытка {attempt + 1} для {url}")
+            time.sleep(2)  # Задержка перед повторной попыткой
+    else:
         return []
 
     soup = BeautifulSoup(response.content, 'html.parser')
     games = []
 
-    # Парсинг игр на странице
-    for game_div in soup.find_all('div', class_='base'):
+    # Парсинг игр на странице с прогресс-баром
+    game_divs = soup.find_all('div', class_='base')
+    for game_div in tqdm(game_divs, desc="Обработка игр", unit="игра"):
         title_tag = game_div.find('div', class_='header-h1').find('h1')
         if title_tag:
             # Очистка заголовка от различных суффиксов
@@ -51,10 +71,23 @@ def fetch_games(url):
 
     return games
 
-def fetch_download_link_and_size(game_url):
-    response = requests.get(game_url)
-    if response.status_code != 200:
-        logging.error(f"[GAME PAGE] Ошибка при получении данных с сайта: {response.status_code}")
+def fetch_download_link_and_size(game_url, retries=3, timeout=10):
+
+
+    for attempt in range(retries):
+        try:
+            response = requests.get(game_url, timeout=timeout)
+            if response.status_code == 200:
+                break
+            else:
+                logging.error(f"[GAME PAGE] Ошибка при получении данных с сайта: {response.status_code}")
+        except requests.exceptions.RequestException as e:
+            logging.error(f"[GAME PAGE] Ошибка запроса: {e}")
+        
+        if attempt < retries - 1:
+            logging.info(f"[GAME PAGE] Повторная попытка {attempt + 1} для {game_url}")
+            time.sleep(2)  # Задержка перед повторной попыткой
+    else:
         return None, None, None, None
 
     soup = BeautifulSoup(response.content, 'html.parser')
@@ -83,8 +116,16 @@ def fetch_download_link_and_size(game_url):
     with open(torrent_file_path, 'wb') as f:
         f.write(torrent_response.content)
 
+    if os.path.getsize(torrent_file_path) == 0:
+        logging.error(f"[TORRENT] Файл {torrent_file_path} пуст.")
+        return None, None, None, None
     # Извлечение magnet-ссылки
-    torrent = Torrent.from_file(torrent_file_path)
+    try:
+        torrent = Torrent.from_file(torrent_file_path)
+    except Exception as e:
+        logging.error(f"[TORRENT] Ошибка при обработке файла {torrent_file_path}: {e}")
+        return None, None, None, None
+    
     magnet_link = torrent.magnet_link
 
     # Извлечение размера игры
@@ -112,17 +153,14 @@ def main():
     base_url = 'https://freetp.org/page/'
     all_games = []
 
-    # Используем ThreadPoolExecutor для многопоточной обработки
-    with ThreadPoolExecutor(max_workers=10) as executor:
-        future_to_url = {executor.submit(fetch_games, f'{base_url}{page}/'): page for page in range(1, 51)}
-        for future in as_completed(future_to_url):
-            page = future_to_url[future]
-            try:
-                games = future.result()
-                all_games.extend(games)
-                logging.info(f"[PAGE] Обработана страница: {page}")
-            except Exception as exc:
-                logging.error(f"[PAGE] Страница {page} вызвала исключение: {exc}")
+    # Последовательная обработка страниц с прогресс-баром
+    for page in tqdm(range(5, 10), desc="Обработка страниц", unit="страница"):
+        try:
+            games = fetch_games(f'{base_url}{page}/')
+            all_games.extend(games)
+            logging.info(f"[PAGE] Обработана страница: {page}")
+        except Exception as exc:
+            logging.error(f"[PAGE] Страница {page} вызвала исключение: {exc}")
 
     if all_games:
         save_to_json(all_games)
