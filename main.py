@@ -61,13 +61,16 @@ def fetch_games(url, retries=3, timeout=10):
 
             if game_link:
                 download_link, file_size, upload_date, magnet_link = fetch_download_link_and_size(game_link)
-                games.append({
-                    'title': title,
-                    'uris': [magnet_link] if magnet_link else [],
-                    'uploadDate': upload_date,
-                    'fileSize': file_size
-                })
-                logging.info(f"[GAME] Обработана игра: {title}")
+                
+                # Добавляем игру только если есть magnet-ссылка
+                if magnet_link:
+                    games.append({
+                        'title': title,
+                        'uris': [magnet_link],
+                        'uploadDate': upload_date,
+                        'fileSize': file_size
+                    })
+                    logging.info(f"[GAME] Обработана игра: {title}")
 
     return games
 
