@@ -157,7 +157,7 @@ def main():
     all_games = []
 
     # Последовательная обработка страниц с прогресс-баром
-    for page in tqdm(range(5, 10), desc="Обработка страниц", unit="страница"):
+    for page in tqdm(range(1, 272), desc="Обработка страниц", unit="страница"):
         try:
             games = fetch_games(f'{base_url}{page}/')
             all_games.extend(games)
