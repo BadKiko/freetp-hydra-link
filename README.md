@@ -8,6 +8,9 @@ This repository contains all games (1700+) with online fixes from the FreeTP web
 
 Open **Hydra**, go to the **Settings** section, then to **Download Sources**. Click **Add Source**, paste the link provided below, click **Verify**, and then **Import**. Done!
 
+```
+https://raw.githubusercontent.com/BadKiko/freetp-hydra-link/refs/heads/main/games.json
+```
 
 ### ☠️ If you can't find a game ☠️
 
