@@ -597,7 +597,8 @@
         {
             "title": "Buckshot Roulette",
             "uris": [
-                "magnet:?xt=urn:btih:015cd5516aca9d6de5662b6fa482c93fdcbbaa1f"
+                "magnet:?xt=urn:btih:015cd5516aca9d6de5662b6fa482c93fdcbbaa1f",
+                "https://freetp.org/engine/download.php?id=13506&area="
             ],
             "uploadDate": "13-12-2024, 18:33",
             "fileSize": "297.68 MB"
