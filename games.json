@@ -44,7 +44,8 @@
         {
             "title": "КЛЕТЬ",
             "uris": [
-                "magnet:?xt=urn:btih:02f40f91b91e9200096ec5d573fd8f6ab634dc3e"
+                "magnet:?xt=urn:btih:02f40f91b91e9200096ec5d573fd8f6ab634dc3e",
+                "https://freetp.org/engine/download.php?id=13849&area="
             ],
             "uploadDate": "10-01-2025, 15:39",
             "fileSize": "851.21 MB"
