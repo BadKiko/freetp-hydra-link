@@ -2,7 +2,7 @@
 
 ### 🏴‍☠️ Description 🏴‍☠️
 
-This repository contains all games (1700+) with online fixes from the FreeTP website for Hydra Launcher in JSON format.
+This repository contains all games (2295) with online fixes from the FreeTP website for Hydra Launcher in JSON format.
 
 ### 💀 Installation 💀
 
