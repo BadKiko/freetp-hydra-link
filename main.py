@@ -280,7 +280,7 @@ def main():
     # Начальная страница
     current_page = 1
     not_found_count = 0
-    max_pages = 400  # Примерно столько страниц на сайте
+    max_pages = 4  # Примерно столько страниц на сайте
     
     # Создаем прогресс-бар
     pbar = tqdm(total=max_pages, desc="Обработка страниц", unit="страница")
