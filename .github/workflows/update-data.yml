@@ -29,10 +29,12 @@ jobs:
         run: python main.py
 
       - name: Commit and push if changes
+        env:
+          TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add .
           git diff --quiet && git diff --staged --quiet || (
           git commit -m "Автоматическое обновление данных $(date +'%Y-%m-%d')" &&
-          git push https://x-access-token:${{ secrets.PERSONAL_TOKEN }}@github.com/${{ github.repository }}.git) 
+          git push https://x-access-token:${TOKEN}@github.com/BadKiko/freetp-hydra-link.git)
