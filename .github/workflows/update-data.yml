@@ -2,10 +2,11 @@ name: Update Data Periodically
 
 on:
   schedule:
-    # Запуск каждые 3 дня в 02:00 UTC
     - cron: '0 2 */3 * *'
-  # Позволяет запускать workflow вручную из вкладки Actions
   workflow_dispatch:
+
+permissions:
+  contents: write  # Даем токену права на запись
 
 jobs:
   update:
@@ -13,6 +14,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -29,12 +32,13 @@ jobs:
         run: python main.py
 
       - name: Commit and push if changes
-        env:
-          TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
           git add .
-          git diff --quiet && git diff --staged --quiet || (
-          git commit -m "Автоматическое обновление данных $(date +'%Y-%m-%d')" &&
-          git push https://x-access-token:${TOKEN}@github.com/BadKiko/freetp-hydra-link.git)
+          if ! git diff --quiet && ! git diff --staged --quiet; then
+            git commit -m "Автоматическое обновление данных $(date +'%Y-%m-%d')"
+            git push
+          else
+            echo "Нет изменений для коммита"
+          fi
